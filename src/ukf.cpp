@@ -58,6 +58,15 @@ void UKF::GenerateSigmaPoints(MatrixXd *Xsig_out) {
     //calculate sigma points ...
     //set sigma points as columns of matrix Xsig
 
+    // col 0 -> xk|k
+    Xsig.col(0) << x;
+
+    // Other points
+    for (size_t n = 0; n < n_x; n++) {
+        Xsig.col(1 + n) << x + sqrt(lambda + n_x) * A.col(n);
+        Xsig.col(1 + n_x + n) << x - sqrt(lambda + n_x) * A.col(n);
+    }
+
 
 /*******************************************************************************
  * Student part end
